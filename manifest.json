@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Bookmarks Homepage",
+  "version": "1.0",
+  "permissions": ["bookmarks"],
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "browser_specific_settings": {
+    "gecko": { "id": "bookmarks-homepage@example.com" }
+  }
+}
