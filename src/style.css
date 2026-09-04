@@ -1,5 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
 @import "tailwindcss";
 
-@utility container {
+@theme {
+    --color-grey-700: #262626;
+    --color-orange-500: #FF8000;
+
+    --font-share-tech: "Share Tech", sans-serif;
+}
+
+.container {
     @apply max-w-[1900px] px-3 mx-auto;
 }
