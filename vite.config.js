@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     plugins: [vue(), tailwindcss()],
+    base: './',
     build: {
         outDir: 'dist',
         rolldownOptions: {
