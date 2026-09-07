@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+import { useSettings } from "@/composable/useSettings";
+
+const { settingsConfig } = useSettings();
 
 const time = ref(null);
 let intervalId = null;
@@ -23,5 +26,5 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <span>{{ time }}</span>
+    <span :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ time }}</span>
 </template>

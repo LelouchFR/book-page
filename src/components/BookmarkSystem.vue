@@ -2,6 +2,9 @@
 import { ref, computed, onMounted } from "vue";
 import CurrentTime from "./CurrentTime.vue";
 import SettingsPopup from "./SettingsPopup.vue";
+import { useSettings } from "@/composable/useSettings";
+
+const { settingsConfig } = useSettings();
 
 const rootFolders = ref([]);
 const path = ref([]);
@@ -75,10 +78,10 @@ function goToCrumb(index) {
 <template>
     <header class="container py-4 px-3">
         <div class="flex justify-between text-xl">
-            <h1>Book page</h1>
+            <h1 :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">Book page</h1>
 
             <div class="flex gap-4 items-center">
-                <p class="flex gap-1">
+                <p class="flex gap-1" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">
                     <span @click="goToCrumb(-1)">~/</span>
                     <template v-for="(crumb, i) in path" :key="crumb.id">
                         <span @click="goToCrumb(i)" class="cursor-pointer"><span v-if="i >= 1">/ </span>{{ crumb.title }}</span>
@@ -103,8 +106,8 @@ function goToCrumb(index) {
         <section class="grid grid-cols-12 gap-4">
             <div v-for="folder in currentFolders" :key="folder.id" class="folder">
                 <div @click="openFolder(folder)" class="flex flex-col gap-2 items-center cursor-pointer">
-                    <img src="/folder.svg" alt="" class="w-8 h-8" />
-                    <h3 class="text-center">{{ folder.title }}</h3>
+                    <img src="/folder.svg" alt="" :class="{ 'w-4 h-4': settingsConfig.theme.iconSize === 'small', 'w-8 h-8': settingsConfig.theme.iconSize === 'medium', 'w-12 h-12': settingsConfig.theme.iconSize === 'big' }" />
+                    <h3 class="text-center" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ folder.title }}</h3>
                 </div>
             </div>
             <a v-if="currentBookmarks.length" v-for="bookmark in currentBookmarks" :key="bookmark.id" :href="bookmark.url" class="flex flex-col items-center gap-1">
@@ -114,9 +117,9 @@ function goToCrumb(index) {
                      data-fallback-index="0"
                      @error="handleFaviconError"
                      alt=""
-                     class="w-10 h-10"
+                     :class="{ 'w-4 h-4': settingsConfig.theme.iconSize === 'small', 'w-10 h-10': settingsConfig.theme.iconSize === 'medium', 'w-14 h-14': settingsConfig.theme.iconSize === 'big' }"
                 />
-                <span class="text-center">{{ bookmark.title }}</span>
+                <span class="text-center" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ bookmark.title }}</span>
             </a>
         </section>
     </main>

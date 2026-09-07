@@ -15,6 +15,11 @@ function loadSettings() {
     return {
         theme: {
             type: 'dark',
+            customColors: {
+                primary: '',
+                secondary: '',
+            },
+            iconSize: 'medium'
         }
     };
 }
