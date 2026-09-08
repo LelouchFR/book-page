@@ -78,7 +78,7 @@ function goToCrumb(index) {
 <template>
     <header class="container py-4 px-3">
         <div class="flex justify-between text-xl">
-            <h1 :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">Book page</h1>
+            <img src="/logo_lg.svg" />
 
             <div class="flex gap-4 items-center">
                 <p class="flex gap-1" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">
@@ -114,10 +114,10 @@ function goToCrumb(index) {
                 <img 
                     :src="getFaviconCandidates(bookmark.url)[0]"
                     :data-candidates="JSON.stringify(getFaviconCandidates(bookmark.url))"
-                     data-fallback-index="0"
-                     @error="handleFaviconError"
-                     alt=""
-                     :class="{ 'w-4 h-4': settingsConfig.theme.iconSize === 'small', 'w-10 h-10': settingsConfig.theme.iconSize === 'medium', 'w-14 h-14': settingsConfig.theme.iconSize === 'big' }"
+                    data-fallback-index="0"
+                    @error="handleFaviconError"
+                    alt=""
+                    :class="{ 'w-4 h-4': settingsConfig.theme.iconSize === 'small', 'w-10 h-10': settingsConfig.theme.iconSize === 'medium', 'w-14 h-14': settingsConfig.theme.iconSize === 'big' }"
                 />
                 <span class="text-center" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ bookmark.title }}</span>
             </a>
