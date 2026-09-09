@@ -2,6 +2,8 @@
 import { ref, computed, onMounted } from "vue";
 import CurrentTime from "./CurrentTime.vue";
 import SettingsPopup from "./SettingsPopup.vue";
+import FolderContent from "./FolderContent.vue";
+import FaviconHandler from "./FaviconHandler.vue";
 import { useSettings } from "@/composable/useSettings";
 
 const { settingsConfig } = useSettings();
@@ -25,31 +27,6 @@ function buildFolderTree(node) {
         bookmarks,
         subfolders,
     };
-}
-
-const FALLBACK_EXTS = ['ico', 'svg', 'png', 'webp', 'jpg'];
-
-function getFaviconCandidates(pageUrl) {
-    try {
-        const domain = new URL(pageUrl).origin;
-        return FALLBACK_EXTS.map(ext => ext === 'ico' ? `${domain}/favicon.ico` : `${domain}/logo.${ext}`);
-    } catch {
-        return [];
-    }
-}
-
-function handleFaviconError(event) {
-    const img = event.target;
-    const candidates = JSON.parse(img.dataset.candidates);
-    const nextIndex = Number(img.dataset.fallbackIndex) + 1;
-
-    if (nextIndex < candidates.length) {
-        img.dataset.fallbackIndex = nextIndex;
-        img.src = candidates[nextIndex];
-    } else {
-        img.onerror = null;
-        img.src = "/web.svg";
-    }
 }
 
 const currentFolders = computed(() => {
@@ -106,20 +83,13 @@ function goToCrumb(index) {
         <section class="grid grid-cols-12 gap-4">
             <div v-for="folder in currentFolders" :key="folder.id" class="folder">
                 <div @click="openFolder(folder)" class="flex flex-col gap-2 items-center cursor-pointer">
-                    <img src="/folder.svg" alt="" :class="{ 'w-4 h-4': settingsConfig.theme.iconSize === 'small', 'w-8 h-8': settingsConfig.theme.iconSize === 'medium', 'w-12 h-12': settingsConfig.theme.iconSize === 'big' }" />
+                    <FolderContent :size="settingsConfig.theme.iconSize" :config="settingsConfig" />
                     <h3 class="text-center" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ folder.title }}</h3>
                 </div>
             </div>
-            <a v-if="currentBookmarks.length" v-for="bookmark in currentBookmarks" :key="bookmark.id" :href="bookmark.url" class="flex flex-col items-center gap-1">
-                <img 
-                    :src="getFaviconCandidates(bookmark.url)[0]"
-                    :data-candidates="JSON.stringify(getFaviconCandidates(bookmark.url))"
-                    data-fallback-index="0"
-                    @error="handleFaviconError"
-                    alt=""
-                    :class="{ 'w-4 h-4': settingsConfig.theme.iconSize === 'small', 'w-10 h-10': settingsConfig.theme.iconSize === 'medium', 'w-14 h-14': settingsConfig.theme.iconSize === 'big' }"
-                />
-                <span class="text-center" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ bookmark.title }}</span>
+            <a v-if="currentBookmarks.length" v-for="bookmark in currentBookmarks" :key="bookmark.id" :href="bookmark.url" class="flex flex-col items-center gap-1" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">
+                <FaviconHandler :bookmark="bookmark" :config="settingsConfig" />
+                <span class="text-center" >{{ bookmark.title }}</span>
             </a>
         </section>
     </main>

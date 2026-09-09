@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useSettings } from '@/composable/useSettings';
+import FolderContent from './FolderContent.vue';
 
 const openPopup = ref(false);
 const { settingsConfig } = useSettings();
@@ -73,7 +74,7 @@ const { settingsConfig } = useSettings();
                         @click="settingsConfig.theme.iconSize = size"
                     >
                         <div class="flex flex-col gap-2 items-center cursor-pointer">
-                            <img src="/folder.svg" alt="" :class="{ 'w-4 h-4': size === 'small', 'w-8 h-8': size === 'medium', 'w-12 h-12': size === 'big' }" />
+                            <FolderContent :size="size" :config="settingsConfig" />
                             <h3 class="text-center">{{ size.charAt(0).toUpperCase() + size.substring(1) }}</h3>
                         </div>
                         <div class="absolute bottom-1 right-1">
