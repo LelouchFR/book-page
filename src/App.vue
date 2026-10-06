@@ -7,7 +7,7 @@ const { settingsConfig } = useSettings();
 
 <template>
     <div
-        class="bg-grey-700 text-orange-500 font-share-tech h-screen"
+        class="bg-grey-700 text-orange-500 font-share-tech min-h-screen"
         :class="{ 'bg-grey-700': settingsConfig.theme.type === 'dark', 'bg-yellow-300': settingsConfig.theme.type === 'light' }"
         :style="{ backgroundColor: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.primary : '' }"
     >

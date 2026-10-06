@@ -80,7 +80,7 @@ function goToCrumb(index) {
             <span>Back</span>
         </button>
 
-        <section class="grid grid-cols-12 gap-4">
+        <section class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 2xl:grid-cols-12 gap-4">
             <div v-for="folder in currentFolders" :key="folder.id" class="folder">
                 <div @click="openFolder(folder)" class="flex flex-col gap-2 items-center cursor-pointer">
                     <FolderContent :size="settingsConfig.theme.iconSize" :config="settingsConfig" />

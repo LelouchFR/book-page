@@ -83,6 +83,9 @@ const { settingsConfig } = useSettings();
                         </div>
                     </div>
                 </div>
+                <h3 class="text-xl">Base Directory</h3>
+                <div class="flex gap-2">
+                </div>
             </div>
         </section>
     </div>
