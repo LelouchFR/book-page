@@ -8,6 +8,9 @@ import { useSettings } from "@/composable/useSettings";
 
 const { settingsConfig } = useSettings();
 
+const backButtonHovered = ref(false);
+const nextButtonHovered = ref(false);
+
 const rootFolders = ref([]);
 const path = ref([]);
 const api = typeof browser !== "undefined" ? browser : chrome;
@@ -58,13 +61,22 @@ function goToCrumb(index) {
             <div class="flex gap-4 items-center">
                 <img src="/logo_lg.svg" />
                 <div class="flex gap-2" v-if="path.length">
-                    <button @click="goBack" class="cursor-pointer flex items-center gap-1" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">
-
-                        <div class="border border-orange-500 pl-2 p-1 pr-0 rounded-sm bg-orange-500/15 hover:bg-orange-500/25 flex justify-center items-center transition-all duration-100">
+                    <button @click="goBack" class="cursor-pointer flex items-center gap-1">
+                        <div
+                            class="border border-orange-500 pl-2 p-1 pr-0 rounded-sm hover:bg-orange-500/25 flex justify-center items-center transition-all duration-100"
+                            :style="{ color: settingsConfig.theme.type === 'custom' && settingsConfig.theme.customColors.secondary, backgroundColor: settingsConfig.theme.type === 'custom' && `${settingsConfig.theme.customColors.secondary}${backButtonHovered ? '40' : '26'}`, borderColor: settingsConfig.theme.type === 'custom' && settingsConfig.theme.customColors.secondary }"
+                            @mouseenter="backButtonHovered = true"
+                            @mouseleave="backButtonHovered = false"
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M384-96 0-480l384-384 68 68-316 316 316 316-68 68Z"/></svg>
                         </div>
                     </button>
-                    <div class="border border-orange-500 p-1 pr-0.5 rounded-sm bg-orange-500/15 hover:bg-orange-500/25 flex justify-center items-center transition-all duration-100">
+                    <div
+                        class="border border-orange-500 p-1 pr-0.5 rounded-sm flex justify-center items-center transition-all duration-100"
+                        :style="{ color: settingsConfig.theme.type === 'custom' && settingsConfig.theme.customColors.secondary, backgroundColor: settingsConfig.theme.type === 'custom' && `${settingsConfig.theme.customColors.secondary}${nextButtonHovered ? '40' : '26'}`, borderColor: settingsConfig.theme.type === 'custom' && settingsConfig.theme.customColors.secondary }"
+                        @mouseenter="nextButtonHovered =  true"
+                        @mouseleave="nextButtonHovered =  false"
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m288-96-68-68 316-316-316-316 68-68 384 384L288-96Z"/></svg>
                     </div>
                 </div>
