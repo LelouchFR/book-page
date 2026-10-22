@@ -19,6 +19,7 @@ function loadSettings() {
                 primary: '',
                 secondary: '',
             },
+            baseDir: '',
             iconSize: 'medium'
         }
     };

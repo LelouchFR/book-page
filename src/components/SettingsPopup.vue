@@ -84,8 +84,12 @@ const { settingsConfig } = useSettings();
                     </div>
                 </div>
                 <h3 class="text-xl">Base Directory</h3>
-                <div class="flex gap-2">
-                </div>
+                <!-- <div v-for="folder in currentFolders" :key="folder.id" class="folder"> -->
+                    <!-- <div @click="openFolder(folder)" class="flex flex-col gap-2 items-center cursor-pointer"> -->
+                    <!--     <FolderContent :size="settingsConfig.theme.iconSize" :config="settingsConfig" /> -->
+                    <!--     <h3 class="text-center" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ folder.title }}</h3> -->
+                    <!-- </div> -->
+                <!-- </div> -->
             </div>
         </section>
     </div>
