@@ -4,12 +4,12 @@ import { reactive } from "vue";
 const { bookmark, config } = defineProps(['bookmark', 'config']);
 
 const failedBookmarks = reactive(new Set());
-const FALLBACK_EXTS = ['ico', 'svg', 'png', 'webp', 'jpg'];
+const FALLBACK_EXTS = ['ico', 'svgico', 'svg', 'png', 'webp', 'jpg'];
 
 function getFaviconCandidates(pageUrl) {
     try {
         const domain = new URL(pageUrl).origin;
-        return FALLBACK_EXTS.map(ext => ext === 'ico' ? `${domain}/favicon.ico` : `${domain}/logo.${ext}`);
+        return FALLBACK_EXTS.map(ext => ext === 'ico' ? `${domain}/favicon.ico` : ext === 'svgico' ? `${domain}/favicon.svg` : `${domain}/logo.${ext}`);
     } catch {
         return [];
     }
