@@ -55,7 +55,20 @@ function goToCrumb(index) {
 <template>
     <header class="container py-4 px-3">
         <div class="flex justify-between text-xl">
-            <img src="/logo_lg.svg" />
+            <div class="flex gap-4 items-center">
+                <img src="/logo_lg.svg" />
+                <div class="flex gap-2" v-if="path.length">
+                    <button @click="goBack" class="cursor-pointer flex items-center gap-1" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">
+
+                        <div class="border border-orange-500 pl-2 p-1 pr-0 rounded-sm bg-orange-500/15 hover:bg-orange-500/25 flex justify-center items-center transition-all duration-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M384-96 0-480l384-384 68 68-316 316 316 316-68 68Z"/></svg>
+                        </div>
+                    </button>
+                    <div class="border border-orange-500 p-1 pr-0.5 rounded-sm bg-orange-500/15 hover:bg-orange-500/25 flex justify-center items-center transition-all duration-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m288-96-68-68 316-316-316-316 68-68 384 384L288-96Z"/></svg>
+                    </div>
+                </div>
+            </div>
 
             <div class="flex gap-4 items-center">
                 <p class="flex gap-1" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">
@@ -73,13 +86,6 @@ function goToCrumb(index) {
     </header>
 
     <main class="container py-10">
-        <button v-if="path.length" @click="goBack" class="mb-4 cursor-pointer flex items-center gap-1">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.608 0L5.408 0.848001L1.312 4.8L5.408 8.784L4.64 9.632L0 5.152V4.464L4.608 0ZM0.832 5.392V4.24H9.28V5.392H0.832Z" fill="#FF8000"/>
-            </svg>
-            <span>Back</span>
-        </button>
-
         <section class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 2xl:grid-cols-12 gap-4">
             <div v-for="folder in currentFolders" :key="folder.id" class="folder">
                 <div @click="openFolder(folder)" class="flex flex-col gap-2 items-center cursor-pointer">
