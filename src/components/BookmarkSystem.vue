@@ -5,6 +5,7 @@ import SettingsPopup from "./SettingsPopup.vue";
 import FolderContent from "./FolderContent.vue";
 import FaviconHandler from "./FaviconHandler.vue";
 import { useSettings } from "@/composable/useSettings";
+import LogoIcon from "./LogoIcon.vue";
 
 const { settingsConfig } = useSettings();
 
@@ -58,8 +59,8 @@ function goToCrumb(index) {
 <template>
     <header class="container py-4 px-3">
         <div class="flex justify-between text-xl">
-            <div class="flex gap-4 items-center">
-                <img src="/logo_lg.svg" />
+            <div class="flex gap-4 items-center" :style="{ color: settingsConfig.theme.type === 'custom' && settingsConfig.theme.customColors.secondary }">
+                <LogoIcon :config="settingsConfig" />
                 <div class="flex gap-2" v-if="path.length">
                     <button @click="goBack" class="cursor-pointer flex items-center gap-1">
                         <div
