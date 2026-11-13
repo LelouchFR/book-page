@@ -1,18 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
 import CurrentTime from "./CurrentTime.vue";
 import SettingsPopup from "./SettingsPopup.vue";
 import LogoIcon from "./LogoIcon.vue";
 
-const { config, path, goBack, goToCrumb } = defineProps({
+const { config, path } = defineProps({
     config: Object,
     path: Object,
-    goBack: Function,
-    goToCrumb: Function,
+    folders: Object,
 });
 
 const backButtonHovered = ref(false);
 const nextButtonHovered = ref(false);
+
+const emit = defineEmits(['goBack', 'goToCrumb', 'setRootFolder']);
 </script>
 
 <template>
@@ -21,7 +22,7 @@ const nextButtonHovered = ref(false);
             <div class="flex gap-4 items-center" :style="{ color: config.theme.type === 'custom' && config.theme.customColors.secondary }">
                 <LogoIcon :config="config" />
                 <div class="flex gap-2" v-if="path.length">
-                    <button @click="goBack" class="cursor-pointer flex items-center gap-1">
+                    <button @click="emit('goBack')" class="cursor-pointer flex items-center gap-1">
                         <div
                             class="border border-orange-500 pl-2 p-1 pr-0 rounded-sm hover:bg-orange-500/25 flex justify-center items-center transition-all duration-100"
                             :style="{ color: config.theme.type === 'custom' && config.theme.customColors.secondary, backgroundColor: config.theme.type === 'custom' && `${config.theme.customColors.secondary}${backButtonHovered ? '40' : '26'}`, borderColor: config.theme.type === 'custom' && config.theme.customColors.secondary }"
@@ -44,15 +45,19 @@ const nextButtonHovered = ref(false);
 
             <div class="flex gap-4 items-center">
                 <p class="flex gap-1" :style="{ color: config.theme.type === 'custom' ? config.theme.customColors.secondary : '' }">
-                    <span @click="goToCrumb(-1)">~/</span>
+                    <span @click="emit('goToCrumb', -1)">~/</span>
                     <template v-for="(crumb, i) in path" :key="crumb.id">
-                        <span @click="goToCrumb(i)" class="cursor-pointer"><span v-if="i >= 1">/ </span>{{ crumb.title }}</span>
+                        <span @click="emit('goToCrumb', i)" class="cursor-pointer"><span v-if="i >= 1">/ </span>{{ crumb.title }}</span>
                     </template>
                 </p>
 
                 <CurrentTime />
 
-                <SettingsPopup />
+                <SettingsPopup
+                    :folders="folders"
+                    :bookmarks="bookmarks"
+                    @set-root-folder="emit('setRootFolder', $event)"
+                />
             </div>
         </div>
     </header>

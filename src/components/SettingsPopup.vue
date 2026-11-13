@@ -2,9 +2,16 @@
 import { ref } from "vue";
 import { useSettings } from '@/composable/useSettings';
 import FolderContent from './FolderContent.vue';
+import BookmarkSystem from './BookmarkSystem.vue';
 
 const openPopup = ref(false);
 const { settingsConfig } = useSettings();
+
+const { folders } = defineProps({
+    folders: Object,
+});
+
+const emit = defineEmits(['setRootFolder']);
 </script>
 
 <template>
@@ -84,12 +91,13 @@ const { settingsConfig } = useSettings();
                     </div>
                 </div>
                 <h3 class="text-xl">Base Directory</h3>
-                <!-- <div v-for="folder in currentFolders" :key="folder.id" class="folder"> -->
-                    <!-- <div @click="openFolder(folder)" class="flex flex-col gap-2 items-center cursor-pointer"> -->
-                    <!--     <FolderContent :size="settingsConfig.theme.iconSize" :config="settingsConfig" /> -->
-                    <!--     <h3 class="text-center" :style="{ color: settingsConfig.theme.type === 'custom' ? settingsConfig.theme.customColors.secondary : '' }">{{ folder.title }}</h3> -->
-                    <!-- </div> -->
-                <!-- </div> -->
+                <BookmarkSystem
+                    :config="settingsConfig"
+                    :show-folders="true"
+                    :show-bookmarks="false"
+                    :folders="folders"
+                    @open-folder="emit('setRootFolder', $event)"
+                />
             </div>
         </section>
     </div>
